@@ -1,5 +1,6 @@
 package com.gmclabs.datatoolbackend.controller;
 
+import com.gmclabs.datatoolbackend.api.HttpClient;
 import com.gmclabs.datatoolbackend.domain.PositionSequenceCalculator;
 import com.gmclabs.datatoolbackend.domain.TotalSequenceCalculator;
 import com.gmclabs.datatoolbackend.domain.TradePieceCompare;
@@ -30,6 +31,7 @@ public class ApiShowController {
     private final TradePieceCompare tradePieceCompare;
     private final TotalSequenceCalculator totalSequenceCalculator;
     private final PositionSequenceCalculator positionSequenceCalculator;
+    private final HttpClient httpClient;
 
     @ResponseBody
     @PostMapping(value = "/")
@@ -70,5 +72,11 @@ public class ApiShowController {
     public TradeTableMaxData calculateTestTotal(@RequestParam HashMap<String, String> data) {
         totalSequenceCalculator.makeSequence(data);
         return totalSequenceCalculator.cycleSequence();
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/rate")
+    public String showTradingView(){
+        return httpClient.get();
     }
 }
